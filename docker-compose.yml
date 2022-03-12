@@ -1,0 +1,62 @@
+version: "3.3"
+volumes:
+  db:
+    driver:
+      local
+services:
+  #PHP Service
+  eskimi:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: app
+    container_name: eskimi
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - eskimi-dsp
+
+  #MySQL Service
+  eskimidb:
+    image: mysql:8.0.22
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: eskimi_task
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+      - db:/var/lib/mysql
+    networks:
+      - eskimi-dsp
+
+  redis:
+    image: redis:4.0
+    container_name: eskimi_redis
+    ports:
+      - "6382:6379"
+    networks:
+      - eskimi-dsp
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: nginxeskimi
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./touch.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - eskimi-dsp
+
+#Docker Networks
+networks:
+  eskimi-dsp:
+    driver: bridge
