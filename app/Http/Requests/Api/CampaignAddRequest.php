@@ -26,10 +26,14 @@ class CampaignAddRequest extends FormRequest
      */
     public function rules()
     {
+        ini_set('post_max_size', '500M');
+        ini_set('upload_max_filesize', '500M');
+
         Log::debug("Campaign Add request data".json_encode($this->all()));
 
         return [
             'name' => 'required',
+            'files.*' => 'nullable|image|max:4096|mimes:jpeg,jpg,png,gif',
             'daily_budget' => 'nullable|numeric',
             'total_budget' => 'nullable|numeric',
         ];

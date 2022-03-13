@@ -2,8 +2,13 @@ import {React, useState, useEffect} from 'react';
 import {ApiEndpoints} from "../shared/ApiEndpoints";
 import {AxiosReq} from "../shared/AxiosReq";
 import { Link } from 'react-router-dom';
+import 'react-responsive-modal/styles.css';
+import {PreviewModal} from "../shared/PreviewModal";
 
 function CampaignList() {
+    const [basePath, setBasePath] = useState('');
+    const [campaignUploads, setCampaignUploads] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
     const [campaignList, setCampaignList] = useState([]);
     const [errorMsg, setErrorMessage] = useState('');
 
@@ -18,8 +23,14 @@ function CampaignList() {
             }
 
             setCampaignList(listData);
+            setBasePath(data.data.path);
         }, 'get');
     }, []);
+
+    const onPreview = (uploads) => {
+        setOpenModal(true)
+        setCampaignUploads(uploads);
+    }
 
     return (
         <div>
@@ -37,8 +48,8 @@ function CampaignList() {
                                     <th scope="col">Total Budget</th>
                                     <th scope="col">From</th>
                                     <th scope="col">To</th>
-                                    <th scope="col">Images</th>
                                     <th scope="col">Edit</th>
+                                    <th scope="col">Preview</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -51,14 +62,11 @@ function CampaignList() {
                                             <td>{ campaign.total_budget }</td>
                                             <td>{ campaign.from_date }</td>
                                             <td>{ campaign.to_date }</td>
-                                            <td>
-                                                {campaign.uploads && campaign.uploads.map(file => {
-                                                    return(
-                                                        <img alt="uploads" src={file.file_path} style={{height: "10%"}}/>
-                                                    )
-                                                }) }
-                                            </td>
                                             <td><Link className="btn btn-sm btn-primary" to={`edit/${campaign.id}`}>Edit</Link></td>
+                                            <td>
+                                                {/*<a className="btn btn-sm btn-primary" href="#" onClick={onPreview(campaign.uploads)}>Preview</a>*/}
+                                                <a className="btn btn-sm btn-primary" href="#" onClick={(e) => onPreview(campaign.uploads)(e)}>Preview</a>
+                                            </td>
                                         </tr>
                                     )
                                 })}
@@ -67,6 +75,8 @@ function CampaignList() {
                         </div>
                     </div>
                 </div>
+
+                <PreviewModal isOpen={openModal} basePath={basePath} campaignUploads={campaignUploads} setModelState={setOpenModal}/>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ use App\Models\Campaign;
 use App\Models\CreativeUpload;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class CampaignCreateSeeder extends Seeder
@@ -32,15 +33,17 @@ class CampaignCreateSeeder extends Seeder
         CreativeUpload::insert(
             [
                 'campaign_id' => $campaign->id,
-                'file_path' => public_path('uploads/demo_1.jpg'),
+                'file_path' => 'demo_1.jpg',
                 'created_at' => $today
             ],
             [
                 'campaign_id' => $campaign->id,
-                'file_path' => public_path('uploads/demo_2.jpg'),
+                'file_path' => 'demo_2.jpg',
                 'created_at' => $today
             ]
         );
+
+        Cache::forget('campaigns');
 
         DB::commit();
     }

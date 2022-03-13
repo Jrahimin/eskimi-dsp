@@ -8,8 +8,8 @@ use App\Models\Campaign;
 use App\Repositories\CampaignRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
@@ -30,6 +30,7 @@ class CampaignService
             $data = $this->campaignRepository->getCampaigns($id);
 
             $response->data = $data;
+            $response->path = URL::to('uploads')."/";
             $response->status = 200;
 
             return $response;
@@ -49,31 +50,16 @@ class CampaignService
 
 
         $campaign = $response->data;
-        $uploadData = [];
-        $today = Carbon::now()->format('Y-m-d H:i:s');
-
         try{
-            ini_set('post_max_size', '500M');
-            ini_set('upload_max_filesize', '500M');
+            $uploadData = $this->getUploadData($request, $campaign);
 
-            foreach ($request->file('files') as $file)
-            {
-                $fileName = Uuid::uuid4()."_".Str::random(4).".".$file->getClientOriginalExtension();
-
-                $uploadData[] = array(
-                    'campaign_id' => $campaign->id,
-                    'file_path' => public_path('uploads/').$fileName,
-                    'created_at' => $today
-                );
-
-                $file->move(public_path('uploads'), $fileName);
-            }
-
-            $uploadResponse = $this->campaignRepository->saveCreativeUploads($uploadData);
-            if($uploadResponse->status != 200){
-                $campaign->delete();
-                $response->errorMessage = $this->exceptionMessage;
-                $response->status = $this->exceptionStatus;
+            if($uploadData){
+                $uploadResponse = $this->campaignRepository->saveCreativeUploads($uploadData);
+                if($uploadResponse->status != 200){
+                    $campaign->delete();
+                    $response->errorMessage = $this->exceptionMessage;
+                    $response->status = $this->exceptionStatus;
+                }
             }
         } catch (\Throwable $ex) {
             Log::error(' : Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
@@ -104,5 +90,25 @@ class CampaignService
 
             return $response;
         }
+    }
+
+    protected function getUploadData(Request $request, $campaign){
+        $today = Carbon::now()->format('Y-m-d H:i:s');
+        $uploadData = [];
+
+        foreach ($request->file('files') as $file)
+        {
+            $fileName = Uuid::uuid4()."_".Str::random(4).".".$file->getClientOriginalExtension();
+
+            $uploadData[] = array(
+                'campaign_id' => $campaign->id,
+                'file_path' => $fileName,
+                'created_at' => $today
+            );
+
+            $file->move(public_path('uploads'), $fileName);
+        }
+
+        return $uploadData;
     }
 }

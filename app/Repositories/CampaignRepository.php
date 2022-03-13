@@ -8,6 +8,7 @@ use App\Entities\CommonResponseEntity;
 use App\Models\Campaign;
 use App\Models\CreativeUpload;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class CampaignRepository
@@ -27,7 +28,9 @@ class CampaignRepository
             return $query->findOrFail($id);
         }
 
-        return $query->latest()->get();
+        return Cache::remember('campaigns', 60, function () use($query){
+            return $query->latest()->get();
+        });
     }
 
     public function addCampaign(Request $request)
@@ -41,6 +44,8 @@ class CampaignRepository
                 'from_date' => $request->from_date,
                 'to_date' => $request->to_date,
             ]);
+
+            Cache::forget('campaigns'); //removed cache to fetch list with added campaign
 
             $response->status = 200;
             $response->data = $campaign;

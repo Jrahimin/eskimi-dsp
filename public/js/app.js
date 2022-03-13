@@ -1,6 +1,73 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@bedrock-layout/use-forwarded-ref/lib/index.m.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@bedrock-layout/use-forwarded-ref/lib/index.m.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useForwardedRef)
+/* harmony export */ });
+/* harmony import */ var _bedrock_layout_use_stateful_ref__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @bedrock-layout/use-stateful-ref */ "./node_modules/@bedrock-layout/use-stateful-ref/lib/index.m.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+
+function useForwardedRef(forwardedRef) {
+  const innerRef = (0,_bedrock_layout_use_stateful_ref__WEBPACK_IMPORTED_MODULE_1__["default"])(null);
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(() => {
+    if (!forwardedRef)
+      return;
+    if (typeof forwardedRef === "function") {
+      forwardedRef(innerRef.current);
+    } else {
+      forwardedRef.current = innerRef.current;
+    }
+  });
+  return innerRef;
+}
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@bedrock-layout/use-stateful-ref/lib/index.m.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@bedrock-layout/use-stateful-ref/lib/index.m.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ useStatefulRef)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function useStatefulRef(initialVal = null) {
+  let [cur, setCur] = react__WEBPACK_IMPORTED_MODULE_0__.useState(initialVal);
+  const { current: ref } = react__WEBPACK_IMPORTED_MODULE_0__.useRef({
+    current: cur
+  });
+  Object.defineProperty(ref, "current", {
+    get: () => cur,
+    set: (value) => {
+      if (!Object.is(cur, value)) {
+        cur = value;
+        setCur(value);
+      }
+    }
+  });
+  return ref;
+}
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@popperjs/core/lib/createPopper.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/createPopper.js ***!
@@ -5664,8 +5731,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/ApiEndpoints */ "./resources/js/components/shared/ApiEndpoints.js");
 /* harmony import */ var _shared_AxiosReq__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/AxiosReq */ "./resources/js/components/shared/AxiosReq.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_responsive_modal_styles_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-responsive-modal/styles.css */ "./node_modules/react-responsive-modal/styles.css");
+/* harmony import */ var _shared_PreviewModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/PreviewModal */ "./resources/js/components/shared/PreviewModal.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5685,16 +5754,33 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function CampaignList() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-      _useState2 = _slicedToArray(_useState, 2),
-      campaignList = _useState2[0],
-      setCampaignList = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+
+function CampaignList() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      basePath = _useState2[0],
+      setBasePath = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      errorMsg = _useState4[0],
-      setErrorMessage = _useState4[1];
+      campaignUploads = _useState4[0],
+      setCampaignUploads = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      openModal = _useState6[0],
+      setOpenModal = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      campaignList = _useState8[0],
+      setCampaignList = _useState8[1];
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      errorMsg = _useState10[0],
+      setErrorMessage = _useState10[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_2__.AxiosReq)(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__.ApiEndpoints.CAMPAIGN, {}, function (data) {
@@ -5707,81 +5793,87 @@ function CampaignList() {
       }
 
       setCampaignList(listData);
+      setBasePath(data.data.path);
     }, 'get');
   }, []);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+
+  var onPreview = function onPreview(uploads) {
+    setOpenModal(true);
+    setCampaignUploads(uploads);
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
       className: "row justify-content-center",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
         className: "col-md-8",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
           className: "card",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "card-header",
             children: "Campaigns"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             className: "card-body",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("table", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("table", {
               className: "table table-hover",
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("thead", {
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("thead", {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "#"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "Name"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "Daily Budget"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "Total Budget"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "From"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "To"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
-                    scope: "col",
-                    children: "Images"
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "Edit"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    scope: "col",
+                    children: "Preview"
                   })]
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("tbody", {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tbody", {
                 children: campaignList.map(function (campaign, i) {
-                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("tr", {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("th", {
+                  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("tr", {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                       scope: "row",
                       children: ++i
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: campaign.name
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: campaign.daily_budget
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: campaign.total_budget
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: campaign.from_date
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: campaign.to_date
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: campaign.uploads && campaign.uploads.map(function (file) {
-                        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("img", {
-                          alt: "uploads",
-                          src: file.file_path,
-                          style: {
-                            height: "10%"
-                          }
-                        });
-                      })
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("td", {
-                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link, {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
                         className: "btn btn-sm btn-primary",
                         to: "edit/".concat(campaign.id),
                         children: "Edit"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("a", {
+                        className: "btn btn-sm btn-primary",
+                        href: "#",
+                        onClick: function onClick(e) {
+                          return onPreview(campaign.uploads)(e);
+                        },
+                        children: "Preview"
                       })
                     })]
                   }, i);
@@ -5790,7 +5882,12 @@ function CampaignList() {
             })
           })]
         })
-      })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_shared_PreviewModal__WEBPACK_IMPORTED_MODULE_4__.PreviewModal, {
+        isOpen: openModal,
+        basePath: basePath,
+        campaignUploads: campaignUploads,
+        setModelState: setOpenModal
+      })]
     })
   });
 }
@@ -5859,6 +5956,290 @@ var AxiosReq = function AxiosReq(url, data, callback) {
     callback(data);
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/components/shared/PreviewModal.js":
+/*!********************************************************!*\
+  !*** ./resources/js/components/shared/PreviewModal.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PreviewModal": () => (/* binding */ PreviewModal)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_responsive_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-responsive-modal */ "./node_modules/react-responsive-modal/dist/react-responsive-modal.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+var PreviewModal = function PreviewModal(_ref) {
+  var isOpen = _ref.isOpen,
+      basePath = _ref.basePath,
+      campaignUploads = _ref.campaignUploads,
+      setModelState = _ref.setModelState;
+  console.log('uploads: ', campaignUploads);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_responsive_modal__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    open: isOpen,
+    onClose: function onClose() {
+      return setModelState(false);
+    },
+    center: true,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "modal-header text-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("h4", {
+        children: ["Campaign Creative Uploads", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("hr", {})]
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      className: "modal-body",
+      children: campaignUploads.map(function (file, i) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "col-md-8 mb-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+            alt: "uploads",
+            src: basePath + file.file_path,
+            style: {
+              height: "100px"
+            }
+          })
+        });
+      })
+    })]
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearAllBodyScrollLocks": () => (/* binding */ clearAllBodyScrollLocks),
+/* harmony export */   "disableBodyScroll": () => (/* binding */ disableBodyScroll),
+/* harmony export */   "enableBodyScroll": () => (/* binding */ enableBodyScroll)
+/* harmony export */ });
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+// Older browsers don't support event options, feature detect it.
+
+// Adopted and modified solution from Bohdan Didukh (2017)
+// https://stackoverflow.com/questions/41594997/ios-10-safari-prevent-scrolling-behind-a-fixed-overlay-and-maintain-scroll-posi
+
+var hasPassiveEvents = false;
+if (typeof window !== 'undefined') {
+  var passiveTestOptions = {
+    get passive() {
+      hasPassiveEvents = true;
+      return undefined;
+    }
+  };
+  window.addEventListener('testPassive', null, passiveTestOptions);
+  window.removeEventListener('testPassive', null, passiveTestOptions);
+}
+
+var isIosDevice = typeof window !== 'undefined' && window.navigator && window.navigator.platform && (/iP(ad|hone|od)/.test(window.navigator.platform) || window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+
+
+var locks = [];
+var documentListenerAdded = false;
+var initialClientY = -1;
+var previousBodyOverflowSetting = void 0;
+var previousBodyPaddingRight = void 0;
+
+// returns true if `el` should be allowed to receive touchmove events.
+var allowTouchMove = function allowTouchMove(el) {
+  return locks.some(function (lock) {
+    if (lock.options.allowTouchMove && lock.options.allowTouchMove(el)) {
+      return true;
+    }
+
+    return false;
+  });
+};
+
+var preventDefault = function preventDefault(rawEvent) {
+  var e = rawEvent || window.event;
+
+  // For the case whereby consumers adds a touchmove event listener to document.
+  // Recall that we do document.addEventListener('touchmove', preventDefault, { passive: false })
+  // in disableBodyScroll - so if we provide this opportunity to allowTouchMove, then
+  // the touchmove event on document will break.
+  if (allowTouchMove(e.target)) {
+    return true;
+  }
+
+  // Do not prevent if the event has more than one touch (usually meaning this is a multi touch gesture like pinch to zoom).
+  if (e.touches.length > 1) return true;
+
+  if (e.preventDefault) e.preventDefault();
+
+  return false;
+};
+
+var setOverflowHidden = function setOverflowHidden(options) {
+  // If previousBodyPaddingRight is already set, don't set it again.
+  if (previousBodyPaddingRight === undefined) {
+    var _reserveScrollBarGap = !!options && options.reserveScrollBarGap === true;
+    var scrollBarGap = window.innerWidth - document.documentElement.clientWidth;
+
+    if (_reserveScrollBarGap && scrollBarGap > 0) {
+      previousBodyPaddingRight = document.body.style.paddingRight;
+      document.body.style.paddingRight = scrollBarGap + 'px';
+    }
+  }
+
+  // If previousBodyOverflowSetting is already set, don't set it again.
+  if (previousBodyOverflowSetting === undefined) {
+    previousBodyOverflowSetting = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+var restoreOverflowSetting = function restoreOverflowSetting() {
+  if (previousBodyPaddingRight !== undefined) {
+    document.body.style.paddingRight = previousBodyPaddingRight;
+
+    // Restore previousBodyPaddingRight to undefined so setOverflowHidden knows it
+    // can be set again.
+    previousBodyPaddingRight = undefined;
+  }
+
+  if (previousBodyOverflowSetting !== undefined) {
+    document.body.style.overflow = previousBodyOverflowSetting;
+
+    // Restore previousBodyOverflowSetting to undefined
+    // so setOverflowHidden knows it can be set again.
+    previousBodyOverflowSetting = undefined;
+  }
+};
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollHeight#Problems_and_solutions
+var isTargetElementTotallyScrolled = function isTargetElementTotallyScrolled(targetElement) {
+  return targetElement ? targetElement.scrollHeight - targetElement.scrollTop <= targetElement.clientHeight : false;
+};
+
+var handleScroll = function handleScroll(event, targetElement) {
+  var clientY = event.targetTouches[0].clientY - initialClientY;
+
+  if (allowTouchMove(event.target)) {
+    return false;
+  }
+
+  if (targetElement && targetElement.scrollTop === 0 && clientY > 0) {
+    // element is at the top of its scroll.
+    return preventDefault(event);
+  }
+
+  if (isTargetElementTotallyScrolled(targetElement) && clientY < 0) {
+    // element is at the bottom of its scroll.
+    return preventDefault(event);
+  }
+
+  event.stopPropagation();
+  return true;
+};
+
+var disableBodyScroll = function disableBodyScroll(targetElement, options) {
+  // targetElement must be provided
+  if (!targetElement) {
+    // eslint-disable-next-line no-console
+    console.error('disableBodyScroll unsuccessful - targetElement must be provided when calling disableBodyScroll on IOS devices.');
+    return;
+  }
+
+  // disableBodyScroll must not have been called on this targetElement before
+  if (locks.some(function (lock) {
+    return lock.targetElement === targetElement;
+  })) {
+    return;
+  }
+
+  var lock = {
+    targetElement: targetElement,
+    options: options || {}
+  };
+
+  locks = [].concat(_toConsumableArray(locks), [lock]);
+
+  if (isIosDevice) {
+    targetElement.ontouchstart = function (event) {
+      if (event.targetTouches.length === 1) {
+        // detect single touch.
+        initialClientY = event.targetTouches[0].clientY;
+      }
+    };
+    targetElement.ontouchmove = function (event) {
+      if (event.targetTouches.length === 1) {
+        // detect single touch.
+        handleScroll(event, targetElement);
+      }
+    };
+
+    if (!documentListenerAdded) {
+      document.addEventListener('touchmove', preventDefault, hasPassiveEvents ? { passive: false } : undefined);
+      documentListenerAdded = true;
+    }
+  } else {
+    setOverflowHidden(options);
+  }
+};
+
+var clearAllBodyScrollLocks = function clearAllBodyScrollLocks() {
+  if (isIosDevice) {
+    // Clear all locks ontouchstart/ontouchmove handlers, and the references.
+    locks.forEach(function (lock) {
+      lock.targetElement.ontouchstart = null;
+      lock.targetElement.ontouchmove = null;
+    });
+
+    if (documentListenerAdded) {
+      document.removeEventListener('touchmove', preventDefault, hasPassiveEvents ? { passive: false } : undefined);
+      documentListenerAdded = false;
+    }
+
+    // Reset initial clientY.
+    initialClientY = -1;
+  } else {
+    restoreOverflowSetting();
+  }
+
+  locks = [];
+};
+
+var enableBodyScroll = function enableBodyScroll(targetElement) {
+  if (!targetElement) {
+    // eslint-disable-next-line no-console
+    console.error('enableBodyScroll unsuccessful - targetElement must be provided when calling enableBodyScroll on IOS devices.');
+    return;
+  }
+
+  locks = locks.filter(function (lock) {
+    return lock.targetElement !== targetElement;
+  });
+
+  if (isIosDevice) {
+    targetElement.ontouchstart = null;
+    targetElement.ontouchmove = null;
+
+    if (documentListenerAdded && locks.length === 0) {
+      document.removeEventListener('touchmove', preventDefault, hasPassiveEvents ? { passive: false } : undefined);
+      documentListenerAdded = false;
+    }
+  } else if (!locks.length) {
+    restoreOverflowSetting();
+  }
+};
+
+
 
 /***/ }),
 
@@ -10998,6 +11379,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "@charset \"UTF-8\";\n.react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow, .react-datepicker__navigation-icon::before {\n  border-color: #ccc;\n  border-style: solid;\n  border-width: 3px 3px 0 0;\n  content: \"\";\n  display: block;\n  height: 9px;\n  position: absolute;\n  top: 6px;\n  width: 9px;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle, .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle {\n  margin-left: -4px;\n  position: absolute;\n  width: 0;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::after, .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {\n  box-sizing: content-box;\n  position: absolute;\n  border: 8px solid transparent;\n  height: 0;\n  width: 1px;\n  content: \"\";\n  z-index: -1;\n  border-width: 8px;\n  left: -8px;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {\n  border-bottom-color: #aeaeae;\n}\n\n.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle {\n  top: 0;\n  margin-top: -8px;\n}\n.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {\n  border-top: none;\n  border-bottom-color: #f0f0f0;\n}\n.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {\n  top: 0;\n}\n.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {\n  top: -1px;\n  border-bottom-color: #aeaeae;\n}\n\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle {\n  bottom: 0;\n  margin-bottom: -8px;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::after {\n  border-bottom: none;\n  border-top-color: #fff;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::after {\n  bottom: 0;\n}\n.react-datepicker-popper[data-placement^=top] .react-datepicker__triangle::before {\n  bottom: -1px;\n  border-top-color: #aeaeae;\n}\n\n.react-datepicker-wrapper {\n  display: inline-block;\n  padding: 0;\n  border: 0;\n  width: 100%;\n}\n\n.react-datepicker {\n  font-family: \"Helvetica Neue\", helvetica, arial, sans-serif;\n  font-size: 0.8rem;\n  background-color: #fff;\n  color: #000;\n  border: 1px solid #aeaeae;\n  border-radius: 0.3rem;\n  display: inline-block;\n  position: relative;\n}\n\n.react-datepicker--time-only .react-datepicker__triangle {\n  left: 35px;\n}\n.react-datepicker--time-only .react-datepicker__time-container {\n  border-left: 0;\n}\n.react-datepicker--time-only .react-datepicker__time,\n.react-datepicker--time-only .react-datepicker__time-box {\n  border-bottom-left-radius: 0.3rem;\n  border-bottom-right-radius: 0.3rem;\n}\n\n.react-datepicker__triangle {\n  position: absolute;\n  left: 50px;\n}\n\n.react-datepicker-popper {\n  z-index: 1;\n}\n.react-datepicker-popper[data-placement^=bottom] {\n  padding-top: 10px;\n}\n.react-datepicker-popper[data-placement=bottom-end] .react-datepicker__triangle, .react-datepicker-popper[data-placement=top-end] .react-datepicker__triangle {\n  left: auto;\n  right: 50px;\n}\n.react-datepicker-popper[data-placement^=top] {\n  padding-bottom: 10px;\n}\n.react-datepicker-popper[data-placement^=right] {\n  padding-left: 8px;\n}\n.react-datepicker-popper[data-placement^=right] .react-datepicker__triangle {\n  left: auto;\n  right: 42px;\n}\n.react-datepicker-popper[data-placement^=left] {\n  padding-right: 8px;\n}\n.react-datepicker-popper[data-placement^=left] .react-datepicker__triangle {\n  left: 42px;\n  right: auto;\n}\n\n.react-datepicker__header {\n  text-align: center;\n  background-color: #f0f0f0;\n  border-bottom: 1px solid #aeaeae;\n  border-top-left-radius: 0.3rem;\n  padding: 8px 0;\n  position: relative;\n}\n.react-datepicker__header--time {\n  padding-bottom: 8px;\n  padding-left: 5px;\n  padding-right: 5px;\n}\n.react-datepicker__header--time:not(.react-datepicker__header--time--only) {\n  border-top-left-radius: 0;\n}\n.react-datepicker__header:not(.react-datepicker__header--has-time-select) {\n  border-top-right-radius: 0.3rem;\n}\n\n.react-datepicker__year-dropdown-container--select,\n.react-datepicker__month-dropdown-container--select,\n.react-datepicker__month-year-dropdown-container--select,\n.react-datepicker__year-dropdown-container--scroll,\n.react-datepicker__month-dropdown-container--scroll,\n.react-datepicker__month-year-dropdown-container--scroll {\n  display: inline-block;\n  margin: 0 2px;\n}\n\n.react-datepicker__current-month,\n.react-datepicker-time__header,\n.react-datepicker-year-header {\n  margin-top: 0;\n  color: #000;\n  font-weight: bold;\n  font-size: 0.944rem;\n}\n\n.react-datepicker-time__header {\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.react-datepicker__navigation {\n  align-items: center;\n  background: none;\n  display: flex;\n  justify-content: center;\n  text-align: center;\n  cursor: pointer;\n  position: absolute;\n  top: 2px;\n  padding: 0;\n  border: none;\n  z-index: 1;\n  height: 32px;\n  width: 32px;\n  text-indent: -999em;\n  overflow: hidden;\n}\n.react-datepicker__navigation--previous {\n  left: 2px;\n}\n.react-datepicker__navigation--next {\n  right: 2px;\n}\n.react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {\n  right: 85px;\n}\n.react-datepicker__navigation--years {\n  position: relative;\n  top: 0;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.react-datepicker__navigation--years-previous {\n  top: 4px;\n}\n.react-datepicker__navigation--years-upcoming {\n  top: -4px;\n}\n.react-datepicker__navigation:hover *::before {\n  border-color: #a6a6a6;\n}\n\n.react-datepicker__navigation-icon {\n  position: relative;\n  top: -1px;\n  font-size: 20px;\n  width: 0;\n}\n.react-datepicker__navigation-icon--next {\n  left: -2px;\n}\n.react-datepicker__navigation-icon--next::before {\n  transform: rotate(45deg);\n  left: -7px;\n}\n.react-datepicker__navigation-icon--previous {\n  right: -2px;\n}\n.react-datepicker__navigation-icon--previous::before {\n  transform: rotate(225deg);\n  right: -7px;\n}\n\n.react-datepicker__month-container {\n  float: left;\n}\n\n.react-datepicker__year {\n  margin: 0.4rem;\n  text-align: center;\n}\n.react-datepicker__year-wrapper {\n  display: flex;\n  flex-wrap: wrap;\n  max-width: 180px;\n}\n.react-datepicker__year .react-datepicker__year-text {\n  display: inline-block;\n  width: 4rem;\n  margin: 2px;\n}\n\n.react-datepicker__month {\n  margin: 0.4rem;\n  text-align: center;\n}\n.react-datepicker__month .react-datepicker__month-text,\n.react-datepicker__month .react-datepicker__quarter-text {\n  display: inline-block;\n  width: 4rem;\n  margin: 2px;\n}\n\n.react-datepicker__input-time-container {\n  clear: both;\n  width: 100%;\n  float: left;\n  margin: 5px 0 10px 15px;\n  text-align: left;\n}\n.react-datepicker__input-time-container .react-datepicker-time__caption {\n  display: inline-block;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container {\n  display: inline-block;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input {\n  display: inline-block;\n  margin-left: 10px;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input {\n  width: auto;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=time]::-webkit-inner-spin-button,\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=time]::-webkit-outer-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=time] {\n  -moz-appearance: textfield;\n}\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__delimiter {\n  margin-left: 5px;\n  display: inline-block;\n}\n\n.react-datepicker__time-container {\n  float: right;\n  border-left: 1px solid #aeaeae;\n  width: 85px;\n}\n.react-datepicker__time-container--with-today-button {\n  display: inline;\n  border: 1px solid #aeaeae;\n  border-radius: 0.3rem;\n  position: absolute;\n  right: -72px;\n  top: 0;\n}\n.react-datepicker__time-container .react-datepicker__time {\n  position: relative;\n  background: white;\n  border-bottom-right-radius: 0.3rem;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {\n  width: 85px;\n  overflow-x: hidden;\n  margin: 0 auto;\n  text-align: center;\n  border-bottom-right-radius: 0.3rem;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {\n  list-style: none;\n  margin: 0;\n  height: calc(195px + (1.7rem / 2));\n  overflow-y: scroll;\n  padding-right: 0;\n  padding-left: 0;\n  width: 100%;\n  box-sizing: content-box;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {\n  height: 30px;\n  padding: 5px 10px;\n  white-space: nowrap;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {\n  cursor: pointer;\n  background-color: #f0f0f0;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {\n  background-color: #216ba5;\n  color: white;\n  font-weight: bold;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected:hover {\n  background-color: #216ba5;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {\n  color: #ccc;\n}\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled:hover {\n  cursor: default;\n  background-color: transparent;\n}\n\n.react-datepicker__week-number {\n  color: #ccc;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n.react-datepicker__week-number.react-datepicker__week-number--clickable {\n  cursor: pointer;\n}\n.react-datepicker__week-number.react-datepicker__week-number--clickable:hover {\n  border-radius: 0.3rem;\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__day-names,\n.react-datepicker__week {\n  white-space: nowrap;\n}\n\n.react-datepicker__day-names {\n  margin-bottom: -8px;\n}\n\n.react-datepicker__day-name,\n.react-datepicker__day,\n.react-datepicker__time-name {\n  color: #000;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n\n.react-datepicker__month--selected, .react-datepicker__month--in-selecting-range, .react-datepicker__month--in-range,\n.react-datepicker__quarter--selected,\n.react-datepicker__quarter--in-selecting-range,\n.react-datepicker__quarter--in-range {\n  border-radius: 0.3rem;\n  background-color: #216ba5;\n  color: #fff;\n}\n.react-datepicker__month--selected:hover, .react-datepicker__month--in-selecting-range:hover, .react-datepicker__month--in-range:hover,\n.react-datepicker__quarter--selected:hover,\n.react-datepicker__quarter--in-selecting-range:hover,\n.react-datepicker__quarter--in-range:hover {\n  background-color: #1d5d90;\n}\n.react-datepicker__month--disabled,\n.react-datepicker__quarter--disabled {\n  color: #ccc;\n  pointer-events: none;\n}\n.react-datepicker__month--disabled:hover,\n.react-datepicker__quarter--disabled:hover {\n  cursor: default;\n  background-color: transparent;\n}\n\n.react-datepicker__day,\n.react-datepicker__month-text,\n.react-datepicker__quarter-text,\n.react-datepicker__year-text {\n  cursor: pointer;\n}\n.react-datepicker__day:hover,\n.react-datepicker__month-text:hover,\n.react-datepicker__quarter-text:hover,\n.react-datepicker__year-text:hover {\n  border-radius: 0.3rem;\n  background-color: #f0f0f0;\n}\n.react-datepicker__day--today,\n.react-datepicker__month-text--today,\n.react-datepicker__quarter-text--today,\n.react-datepicker__year-text--today {\n  font-weight: bold;\n}\n.react-datepicker__day--highlighted,\n.react-datepicker__month-text--highlighted,\n.react-datepicker__quarter-text--highlighted,\n.react-datepicker__year-text--highlighted {\n  border-radius: 0.3rem;\n  background-color: #3dcc4a;\n  color: #fff;\n}\n.react-datepicker__day--highlighted:hover,\n.react-datepicker__month-text--highlighted:hover,\n.react-datepicker__quarter-text--highlighted:hover,\n.react-datepicker__year-text--highlighted:hover {\n  background-color: #32be3f;\n}\n.react-datepicker__day--highlighted-custom-1,\n.react-datepicker__month-text--highlighted-custom-1,\n.react-datepicker__quarter-text--highlighted-custom-1,\n.react-datepicker__year-text--highlighted-custom-1 {\n  color: magenta;\n}\n.react-datepicker__day--highlighted-custom-2,\n.react-datepicker__month-text--highlighted-custom-2,\n.react-datepicker__quarter-text--highlighted-custom-2,\n.react-datepicker__year-text--highlighted-custom-2 {\n  color: green;\n}\n.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,\n.react-datepicker__month-text--selected,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__month-text--in-range,\n.react-datepicker__quarter-text--selected,\n.react-datepicker__quarter-text--in-selecting-range,\n.react-datepicker__quarter-text--in-range,\n.react-datepicker__year-text--selected,\n.react-datepicker__year-text--in-selecting-range,\n.react-datepicker__year-text--in-range {\n  border-radius: 0.3rem;\n  background-color: #216ba5;\n  color: #fff;\n}\n.react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover,\n.react-datepicker__month-text--selected:hover,\n.react-datepicker__month-text--in-selecting-range:hover,\n.react-datepicker__month-text--in-range:hover,\n.react-datepicker__quarter-text--selected:hover,\n.react-datepicker__quarter-text--in-selecting-range:hover,\n.react-datepicker__quarter-text--in-range:hover,\n.react-datepicker__year-text--selected:hover,\n.react-datepicker__year-text--in-selecting-range:hover,\n.react-datepicker__year-text--in-range:hover {\n  background-color: #1d5d90;\n}\n.react-datepicker__day--keyboard-selected,\n.react-datepicker__month-text--keyboard-selected,\n.react-datepicker__quarter-text--keyboard-selected,\n.react-datepicker__year-text--keyboard-selected {\n  border-radius: 0.3rem;\n  background-color: #2579ba;\n  color: #fff;\n}\n.react-datepicker__day--keyboard-selected:hover,\n.react-datepicker__month-text--keyboard-selected:hover,\n.react-datepicker__quarter-text--keyboard-selected:hover,\n.react-datepicker__year-text--keyboard-selected:hover {\n  background-color: #1d5d90;\n}\n.react-datepicker__day--in-selecting-range:not(.react-datepicker__day--in-range,\n.react-datepicker__month-text--in-range,\n.react-datepicker__quarter-text--in-range,\n.react-datepicker__year-text--in-range),\n.react-datepicker__month-text--in-selecting-range:not(.react-datepicker__day--in-range,\n.react-datepicker__month-text--in-range,\n.react-datepicker__quarter-text--in-range,\n.react-datepicker__year-text--in-range),\n.react-datepicker__quarter-text--in-selecting-range:not(.react-datepicker__day--in-range,\n.react-datepicker__month-text--in-range,\n.react-datepicker__quarter-text--in-range,\n.react-datepicker__year-text--in-range),\n.react-datepicker__year-text--in-selecting-range:not(.react-datepicker__day--in-range,\n.react-datepicker__month-text--in-range,\n.react-datepicker__quarter-text--in-range,\n.react-datepicker__year-text--in-range) {\n  background-color: rgba(33, 107, 165, 0.5);\n}\n.react-datepicker__month--selecting-range .react-datepicker__day--in-range:not(.react-datepicker__day--in-selecting-range,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__quarter-text--in-selecting-range,\n.react-datepicker__year-text--in-selecting-range),\n.react-datepicker__month--selecting-range .react-datepicker__month-text--in-range:not(.react-datepicker__day--in-selecting-range,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__quarter-text--in-selecting-range,\n.react-datepicker__year-text--in-selecting-range),\n.react-datepicker__month--selecting-range .react-datepicker__quarter-text--in-range:not(.react-datepicker__day--in-selecting-range,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__quarter-text--in-selecting-range,\n.react-datepicker__year-text--in-selecting-range),\n.react-datepicker__month--selecting-range .react-datepicker__year-text--in-range:not(.react-datepicker__day--in-selecting-range,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__quarter-text--in-selecting-range,\n.react-datepicker__year-text--in-selecting-range) {\n  background-color: #f0f0f0;\n  color: #000;\n}\n.react-datepicker__day--disabled,\n.react-datepicker__month-text--disabled,\n.react-datepicker__quarter-text--disabled,\n.react-datepicker__year-text--disabled {\n  cursor: default;\n  color: #ccc;\n}\n.react-datepicker__day--disabled:hover,\n.react-datepicker__month-text--disabled:hover,\n.react-datepicker__quarter-text--disabled:hover,\n.react-datepicker__year-text--disabled:hover {\n  background-color: transparent;\n}\n\n.react-datepicker__month-text.react-datepicker__month--selected:hover, .react-datepicker__month-text.react-datepicker__month--in-range:hover, .react-datepicker__month-text.react-datepicker__quarter--selected:hover, .react-datepicker__month-text.react-datepicker__quarter--in-range:hover,\n.react-datepicker__quarter-text.react-datepicker__month--selected:hover,\n.react-datepicker__quarter-text.react-datepicker__month--in-range:hover,\n.react-datepicker__quarter-text.react-datepicker__quarter--selected:hover,\n.react-datepicker__quarter-text.react-datepicker__quarter--in-range:hover {\n  background-color: #216ba5;\n}\n.react-datepicker__month-text:hover,\n.react-datepicker__quarter-text:hover {\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__input-container {\n  position: relative;\n  display: inline-block;\n  width: 100%;\n}\n\n.react-datepicker__year-read-view,\n.react-datepicker__month-read-view,\n.react-datepicker__month-year-read-view {\n  border: 1px solid transparent;\n  border-radius: 0.3rem;\n  position: relative;\n}\n.react-datepicker__year-read-view:hover,\n.react-datepicker__month-read-view:hover,\n.react-datepicker__month-year-read-view:hover {\n  cursor: pointer;\n}\n.react-datepicker__year-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__year-read-view:hover .react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view:hover .react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-year-read-view:hover .react-datepicker__month-read-view--down-arrow {\n  border-top-color: #b3b3b3;\n}\n.react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow {\n  transform: rotate(135deg);\n  right: -16px;\n  top: 0;\n}\n\n.react-datepicker__year-dropdown,\n.react-datepicker__month-dropdown,\n.react-datepicker__month-year-dropdown {\n  background-color: #f0f0f0;\n  position: absolute;\n  width: 50%;\n  left: 25%;\n  top: 30px;\n  z-index: 1;\n  text-align: center;\n  border-radius: 0.3rem;\n  border: 1px solid #aeaeae;\n}\n.react-datepicker__year-dropdown:hover,\n.react-datepicker__month-dropdown:hover,\n.react-datepicker__month-year-dropdown:hover {\n  cursor: pointer;\n}\n.react-datepicker__year-dropdown--scrollable,\n.react-datepicker__month-dropdown--scrollable,\n.react-datepicker__month-year-dropdown--scrollable {\n  height: 150px;\n  overflow-y: scroll;\n}\n\n.react-datepicker__year-option,\n.react-datepicker__month-option,\n.react-datepicker__month-year-option {\n  line-height: 20px;\n  width: 100%;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n.react-datepicker__year-option:first-of-type,\n.react-datepicker__month-option:first-of-type,\n.react-datepicker__month-year-option:first-of-type {\n  border-top-left-radius: 0.3rem;\n  border-top-right-radius: 0.3rem;\n}\n.react-datepicker__year-option:last-of-type,\n.react-datepicker__month-option:last-of-type,\n.react-datepicker__month-year-option:last-of-type {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border-bottom-left-radius: 0.3rem;\n  border-bottom-right-radius: 0.3rem;\n}\n.react-datepicker__year-option:hover,\n.react-datepicker__month-option:hover,\n.react-datepicker__month-year-option:hover {\n  background-color: #ccc;\n}\n.react-datepicker__year-option:hover .react-datepicker__navigation--years-upcoming,\n.react-datepicker__month-option:hover .react-datepicker__navigation--years-upcoming,\n.react-datepicker__month-year-option:hover .react-datepicker__navigation--years-upcoming {\n  border-bottom-color: #b3b3b3;\n}\n.react-datepicker__year-option:hover .react-datepicker__navigation--years-previous,\n.react-datepicker__month-option:hover .react-datepicker__navigation--years-previous,\n.react-datepicker__month-year-option:hover .react-datepicker__navigation--years-previous {\n  border-top-color: #b3b3b3;\n}\n.react-datepicker__year-option--selected,\n.react-datepicker__month-option--selected,\n.react-datepicker__month-year-option--selected {\n  position: absolute;\n  left: 15px;\n}\n\n.react-datepicker__close-icon {\n  cursor: pointer;\n  background-color: transparent;\n  border: 0;\n  outline: 0;\n  padding: 0 6px 0 0;\n  position: absolute;\n  top: 0;\n  right: 0;\n  height: 100%;\n  display: table-cell;\n  vertical-align: middle;\n}\n.react-datepicker__close-icon::after {\n  cursor: pointer;\n  background-color: #216ba5;\n  color: #fff;\n  border-radius: 50%;\n  height: 16px;\n  width: 16px;\n  padding: 2px;\n  font-size: 12px;\n  line-height: 1;\n  text-align: center;\n  display: table-cell;\n  vertical-align: middle;\n  content: \"×\";\n}\n\n.react-datepicker__today-button {\n  background: #f0f0f0;\n  border-top: 1px solid #aeaeae;\n  cursor: pointer;\n  text-align: center;\n  font-weight: bold;\n  padding: 5px 0;\n  clear: left;\n}\n\n.react-datepicker__portal {\n  position: fixed;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.8);\n  left: 0;\n  top: 0;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n  z-index: 2147483647;\n}\n.react-datepicker__portal .react-datepicker__day-name,\n.react-datepicker__portal .react-datepicker__day,\n.react-datepicker__portal .react-datepicker__time-name {\n  width: 3rem;\n  line-height: 3rem;\n}\n@media (max-width: 400px), (max-height: 550px) {\n  .react-datepicker__portal .react-datepicker__day-name,\n.react-datepicker__portal .react-datepicker__day,\n.react-datepicker__portal .react-datepicker__time-name {\n    width: 2rem;\n    line-height: 2rem;\n  }\n}\n.react-datepicker__portal .react-datepicker__current-month,\n.react-datepicker__portal .react-datepicker-time__header {\n  font-size: 1.44rem;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/react-responsive-modal/styles.css":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/react-responsive-modal/styles.css ***!
+  \******************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".react-responsive-modal-root {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  z-index: 1000;\n}\n\n.react-responsive-modal-overlay {\n  background: rgba(0, 0, 0, 0.5);\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  z-index: -1;\n}\n\n.react-responsive-modal-container {\n  height: 100%;\n  outline: 0;\n  overflow-x: hidden;\n  overflow-y: auto;\n  text-align: center;\n}\n\n/* Used to trick the browser to center the modal content properly  */\n.react-responsive-modal-containerCenter:after {\n  width: 0;\n  height: 100%;\n  content: '';\n  display: inline-block;\n  vertical-align: middle;\n}\n\n.react-responsive-modal-modal {\n  max-width: 800px;\n  display: inline-block;\n  text-align: left;\n  vertical-align: middle;\n  background: #ffffff;\n  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.25);\n  margin: 1.2rem;\n  padding: 1.2rem;\n  position: relative;\n  overflow-y: auto;\n}\n\n.react-responsive-modal-closeButton {\n  position: absolute;\n  top: 14px;\n  right: 14px;\n  border: none;\n  padding: 0;\n  cursor: pointer;\n  background-color: transparent;\n  display: flex;\n}\n\n@-webkit-keyframes react-responsive-modal-overlay-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n\n@keyframes react-responsive-modal-overlay-in {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n\n@-webkit-keyframes react-responsive-modal-overlay-out {\n  0% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n  }\n}\n\n@keyframes react-responsive-modal-overlay-out {\n  0% {\n    opacity: 1;\n  }\n  100% {\n    opacity: 0;\n  }\n}\n\n@-webkit-keyframes react-responsive-modal-modal-in {\n  0% {\n    transform: scale(0.96);\n    opacity: 0;\n  }\n  100% {\n    transform: scale(100%);\n    opacity: 1;\n  }\n}\n\n@keyframes react-responsive-modal-modal-in {\n  0% {\n    transform: scale(0.96);\n    opacity: 0;\n  }\n  100% {\n    transform: scale(100%);\n    opacity: 1;\n  }\n}\n\n@-webkit-keyframes react-responsive-modal-modal-out {\n  0% {\n    transform: scale(100%);\n    opacity: 1;\n  }\n  100% {\n    transform: scale(0.96);\n    opacity: 0;\n  }\n}\n\n@keyframes react-responsive-modal-modal-out {\n  0% {\n    transform: scale(100%);\n    opacity: 1;\n  }\n  100% {\n    transform: scale(0.96);\n    opacity: 0;\n  }\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -87737,6 +88142,492 @@ var useIsomorphicLayoutEffect = typeof window !== 'undefined' && window.document
 
 /***/ }),
 
+/***/ "./node_modules/react-responsive-modal/dist/react-responsive-modal.esm.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/react-responsive-modal/dist/react-responsive-modal.esm.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Modal": () => (/* binding */ Modal),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var body_scroll_lock__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! body-scroll-lock */ "./node_modules/body-scroll-lock/lib/bodyScrollLock.esm.js");
+/* harmony import */ var _bedrock_layout_use_forwarded_ref__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @bedrock-layout/use-forwarded-ref */ "./node_modules/@bedrock-layout/use-forwarded-ref/lib/index.m.js");
+/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
+
+
+
+
+
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+var CloseIcon = function CloseIcon(_ref) {
+  var classes = _ref.classes,
+      classNames = _ref.classNames,
+      styles = _ref.styles,
+      id = _ref.id,
+      closeIcon = _ref.closeIcon,
+      onClick = _ref.onClick;
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    id: id,
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.closeButton, classNames == null ? void 0 : classNames.closeButton),
+    style: styles == null ? void 0 : styles.closeButton,
+    onClick: onClick,
+    "data-testid": "close-button"
+  }, closeIcon ? closeIcon : react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", {
+    className: classNames == null ? void 0 : classNames.closeIcon,
+    style: styles == null ? void 0 : styles.closeIcon,
+    width: 28,
+    height: 28,
+    viewBox: "0 0 36 36",
+    "data-testid": "close-icon"
+  }, react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M28.5 9.62L26.38 7.5 18 15.88 9.62 7.5 7.5 9.62 15.88 18 7.5 26.38l2.12 2.12L18 20.12l8.38 8.38 2.12-2.12L20.12 18z"
+  })));
+};
+
+var isBrowser = typeof window !== 'undefined';
+
+// https://github.com/alexandrzavalii/focus-trap-js/blob/master/src/index.js v1.1.0
+var candidateSelectors = ['input', 'select', 'textarea', 'a[href]', 'button', '[tabindex]', 'audio[controls]', 'video[controls]', '[contenteditable]:not([contenteditable="false"])'];
+
+function isHidden(node) {
+  // offsetParent being null will allow detecting cases where an element is invisible or inside an invisible element,
+  // as long as the element does not use position: fixed. For them, their visibility has to be checked directly as well.
+  return node.offsetParent === null || getComputedStyle(node).visibility === 'hidden';
+}
+
+function getCheckedRadio(nodes, form) {
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].checked && nodes[i].form === form) {
+      return nodes[i];
+    }
+  }
+}
+
+function isNotRadioOrTabbableRadio(node) {
+  if (node.tagName !== 'INPUT' || node.type !== 'radio' || !node.name) {
+    return true;
+  }
+
+  var radioScope = node.form || node.ownerDocument;
+  var radioSet = radioScope.querySelectorAll('input[type="radio"][name="' + node.name + '"]');
+  var checked = getCheckedRadio(radioSet, node.form);
+  return checked === node || checked === undefined && radioSet[0] === node;
+}
+
+function getAllTabbingElements(parentElem) {
+  var currentActiveElement = document.activeElement;
+  var tabbableNodes = parentElem.querySelectorAll(candidateSelectors.join(','));
+  var onlyTabbable = [];
+
+  for (var i = 0; i < tabbableNodes.length; i++) {
+    var node = tabbableNodes[i];
+
+    if (currentActiveElement === node || !node.disabled && getTabindex(node) > -1 && !isHidden(node) && isNotRadioOrTabbableRadio(node)) {
+      onlyTabbable.push(node);
+    }
+  }
+
+  return onlyTabbable;
+}
+function tabTrappingKey(event, parentElem) {
+  // check if current event keyCode is tab
+  if (!event || event.key !== 'Tab') return;
+
+  if (!parentElem || !parentElem.contains) {
+    if (process && "development" === 'development') {
+      console.warn('focus-trap-js: parent element is not defined');
+    }
+
+    return false;
+  }
+
+  if (!parentElem.contains(event.target)) {
+    return false;
+  }
+
+  var allTabbingElements = getAllTabbingElements(parentElem);
+  var firstFocusableElement = allTabbingElements[0];
+  var lastFocusableElement = allTabbingElements[allTabbingElements.length - 1];
+
+  if (event.shiftKey && event.target === firstFocusableElement) {
+    lastFocusableElement.focus();
+    event.preventDefault();
+    return true;
+  } else if (!event.shiftKey && event.target === lastFocusableElement) {
+    firstFocusableElement.focus();
+    event.preventDefault();
+    return true;
+  }
+
+  return false;
+}
+
+function getTabindex(node) {
+  var tabindexAttr = parseInt(node.getAttribute('tabindex'), 10);
+  if (!isNaN(tabindexAttr)) return tabindexAttr; // Browsers do not return tabIndex correctly for contentEditable nodes;
+  // so if they don't have a tabindex attribute specifically set, assume it's 0.
+
+  if (isContentEditable(node)) return 0;
+  return node.tabIndex;
+}
+
+function isContentEditable(node) {
+  return node.getAttribute('contentEditable');
+}
+
+var FocusTrap = function FocusTrap(_ref) {
+  var container = _ref.container,
+      initialFocusRef = _ref.initialFocusRef;
+  var refLastFocus = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  /**
+   * Handle focus lock on the modal
+   */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    var handleKeyEvent = function handleKeyEvent(event) {
+      if (container == null ? void 0 : container.current) {
+        tabTrappingKey(event, container.current);
+      }
+    };
+
+    if (isBrowser) {
+      document.addEventListener('keydown', handleKeyEvent);
+    } // On mount we focus on the first focusable element in the modal if there is one
+
+
+    if (isBrowser && (container == null ? void 0 : container.current)) {
+      var savePreviousFocus = function savePreviousFocus() {
+        // First we save the last focused element
+        // only if it's a focusable element
+        if (candidateSelectors.findIndex(function (selector) {
+          var _document$activeEleme;
+
+          return (_document$activeEleme = document.activeElement) == null ? void 0 : _document$activeEleme.matches(selector);
+        }) !== -1) {
+          refLastFocus.current = document.activeElement;
+        }
+      };
+
+      if (initialFocusRef) {
+        savePreviousFocus(); // We need to schedule focusing on a next frame - this allows to focus on the modal root
+
+        requestAnimationFrame(function () {
+          var _initialFocusRef$curr;
+
+          (_initialFocusRef$curr = initialFocusRef.current) == null ? void 0 : _initialFocusRef$curr.focus();
+        });
+      } else {
+        var allTabbingElements = getAllTabbingElements(container.current);
+
+        if (allTabbingElements[0]) {
+          savePreviousFocus();
+          allTabbingElements[0].focus();
+        }
+      }
+    }
+
+    return function () {
+      if (isBrowser) {
+        var _refLastFocus$current;
+
+        document.removeEventListener('keydown', handleKeyEvent); // On unmount we restore the focus to the last focused element
+
+        (_refLastFocus$current = refLastFocus.current) == null ? void 0 : _refLastFocus$current.focus();
+      }
+    };
+  }, [container, initialFocusRef]);
+  return null;
+};
+
+var modals = [];
+/**
+ * Handle the order of the modals.
+ * Inspired by the material-ui implementation.
+ */
+
+var modalManager = {
+  /**
+   * Register a new modal
+   */
+  add: function add(newModal) {
+    modals.push(newModal);
+  },
+
+  /**
+   * Remove a modal
+   */
+  remove: function remove(oldModal) {
+    modals = modals.filter(function (modal) {
+      return modal !== oldModal;
+    });
+  },
+
+  /**
+   * When multiple modals are rendered will return true if current modal is the last one
+   */
+  isTopModal: function isTopModal(modal) {
+    return !!modals.length && modals[modals.length - 1] === modal;
+  }
+};
+function useModalManager(ref, open) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (open) {
+      modalManager.add(ref);
+    }
+
+    return function () {
+      modalManager.remove(ref);
+    };
+  }, [open, ref]);
+}
+
+var useScrollLock = function useScrollLock(refModal, open, showPortal, blockScroll, reserveScrollBarGap) {
+  var oldRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (open && refModal.current && blockScroll) {
+      oldRef.current = refModal.current;
+      (0,body_scroll_lock__WEBPACK_IMPORTED_MODULE_3__.disableBodyScroll)(refModal.current, {
+        reserveScrollBarGap: reserveScrollBarGap
+      });
+    }
+
+    return function () {
+      if (oldRef.current) {
+        (0,body_scroll_lock__WEBPACK_IMPORTED_MODULE_3__.enableBodyScroll)(oldRef.current);
+        oldRef.current = null;
+      }
+    };
+  }, [open, showPortal, refModal, blockScroll, reserveScrollBarGap]);
+};
+
+var classes = {
+  root: 'react-responsive-modal-root',
+  overlay: 'react-responsive-modal-overlay',
+  overlayAnimationIn: 'react-responsive-modal-overlay-in',
+  overlayAnimationOut: 'react-responsive-modal-overlay-out',
+  modalContainer: 'react-responsive-modal-container',
+  modalContainerCenter: 'react-responsive-modal-containerCenter',
+  modal: 'react-responsive-modal-modal',
+  modalAnimationIn: 'react-responsive-modal-modal-in',
+  modalAnimationOut: 'react-responsive-modal-modal-out',
+  closeButton: 'react-responsive-modal-closeButton'
+};
+var Modal = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (_ref, ref) {
+  var _classNames$overlayAn, _classNames$overlayAn2, _classNames$modalAnim, _classNames$modalAnim2;
+
+  var open = _ref.open,
+      center = _ref.center,
+      _ref$blockScroll = _ref.blockScroll,
+      blockScroll = _ref$blockScroll === void 0 ? true : _ref$blockScroll,
+      _ref$closeOnEsc = _ref.closeOnEsc,
+      closeOnEsc = _ref$closeOnEsc === void 0 ? true : _ref$closeOnEsc,
+      _ref$closeOnOverlayCl = _ref.closeOnOverlayClick,
+      closeOnOverlayClick = _ref$closeOnOverlayCl === void 0 ? true : _ref$closeOnOverlayCl,
+      container = _ref.container,
+      _ref$showCloseIcon = _ref.showCloseIcon,
+      showCloseIcon = _ref$showCloseIcon === void 0 ? true : _ref$showCloseIcon,
+      closeIconId = _ref.closeIconId,
+      closeIcon = _ref.closeIcon,
+      _ref$focusTrapped = _ref.focusTrapped,
+      focusTrapped = _ref$focusTrapped === void 0 ? true : _ref$focusTrapped,
+      _ref$initialFocusRef = _ref.initialFocusRef,
+      initialFocusRef = _ref$initialFocusRef === void 0 ? undefined : _ref$initialFocusRef,
+      _ref$animationDuratio = _ref.animationDuration,
+      animationDuration = _ref$animationDuratio === void 0 ? 300 : _ref$animationDuratio,
+      classNames = _ref.classNames,
+      styles = _ref.styles,
+      _ref$role = _ref.role,
+      role = _ref$role === void 0 ? 'dialog' : _ref$role,
+      ariaDescribedby = _ref.ariaDescribedby,
+      ariaLabelledby = _ref.ariaLabelledby,
+      modalId = _ref.modalId,
+      onClose = _ref.onClose,
+      onEscKeyDown = _ref.onEscKeyDown,
+      onOverlayClick = _ref.onOverlayClick,
+      onAnimationEnd = _ref.onAnimationEnd,
+      children = _ref.children,
+      reserveScrollBarGap = _ref.reserveScrollBarGap;
+  var refDialog = (0,_bedrock_layout_use_forwarded_ref__WEBPACK_IMPORTED_MODULE_4__["default"])(ref);
+  var refModal = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var refShouldClose = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var refContainer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null); // Lazily create the ref instance
+  // https://reactjs.org/docs/hooks-faq.html#how-to-create-expensive-objects-lazily
+
+  if (refContainer.current === null && isBrowser) {
+    refContainer.current = document.createElement('div');
+  } // The value should be false for srr, that way when the component is hydrated client side,
+  // it will match the server rendered content
+
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      showPortal = _useState[0],
+      setShowPortal = _useState[1]; // Hook used to manage multiple modals opened at the same time
+
+
+  useModalManager(refModal, open); // Hook used to manage the scroll
+
+  useScrollLock(refModal, open, showPortal, blockScroll, reserveScrollBarGap);
+
+  var handleOpen = function handleOpen() {
+    if (refContainer.current && !container && !document.body.contains(refContainer.current)) {
+      document.body.appendChild(refContainer.current);
+    }
+
+    document.addEventListener('keydown', handleKeydown);
+  };
+
+  var handleClose = function handleClose() {
+    if (refContainer.current && !container && document.body.contains(refContainer.current)) {
+      document.body.removeChild(refContainer.current);
+    }
+
+    document.removeEventListener('keydown', handleKeydown);
+  };
+
+  var handleKeydown = function handleKeydown(event) {
+    // Only the last modal need to be escaped when pressing the esc key
+    if (event.keyCode !== 27 || !modalManager.isTopModal(refModal)) {
+      return;
+    }
+
+    onEscKeyDown == null ? void 0 : onEscKeyDown(event);
+
+    if (closeOnEsc) {
+      onClose();
+    }
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    return function () {
+      if (showPortal) {
+        // When the modal is closed or removed directly, cleanup the listeners
+        handleClose();
+      }
+    };
+  }, [showPortal]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    // If the open prop is changing, we need to open the modal
+    // This is also called on the first render if the open prop is true when the modal is created
+    if (open && !showPortal) {
+      setShowPortal(true);
+      handleOpen();
+    }
+  }, [open]);
+
+  var handleClickOverlay = function handleClickOverlay(event) {
+    if (refShouldClose.current === null) {
+      refShouldClose.current = true;
+    }
+
+    if (!refShouldClose.current) {
+      refShouldClose.current = null;
+      return;
+    }
+
+    onOverlayClick == null ? void 0 : onOverlayClick(event);
+
+    if (closeOnOverlayClick) {
+      onClose();
+    }
+
+    refShouldClose.current = null;
+  };
+
+  var handleModalEvent = function handleModalEvent() {
+    refShouldClose.current = false;
+  };
+
+  var handleAnimationEnd = function handleAnimationEnd() {
+    if (!open) {
+      setShowPortal(false);
+    }
+
+    onAnimationEnd == null ? void 0 : onAnimationEnd();
+  };
+
+  var containerModal = container || refContainer.current;
+  var overlayAnimation = open ? (_classNames$overlayAn = classNames == null ? void 0 : classNames.overlayAnimationIn) != null ? _classNames$overlayAn : classes.overlayAnimationIn : (_classNames$overlayAn2 = classNames == null ? void 0 : classNames.overlayAnimationOut) != null ? _classNames$overlayAn2 : classes.overlayAnimationOut;
+  var modalAnimation = open ? (_classNames$modalAnim = classNames == null ? void 0 : classNames.modalAnimationIn) != null ? _classNames$modalAnim : classes.modalAnimationIn : (_classNames$modalAnim2 = classNames == null ? void 0 : classNames.modalAnimationOut) != null ? _classNames$modalAnim2 : classes.modalAnimationOut;
+  return showPortal && containerModal ? react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal(react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.root, classNames == null ? void 0 : classNames.root),
+    style: styles == null ? void 0 : styles.root,
+    "data-testid": "root"
+  }, react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.overlay, classNames == null ? void 0 : classNames.overlay),
+    "data-testid": "overlay",
+    "aria-hidden": true,
+    style: _extends({
+      animation: overlayAnimation + " " + animationDuration + "ms"
+    }, styles == null ? void 0 : styles.overlay)
+  }), react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    ref: refModal,
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.modalContainer, center && classes.modalContainerCenter, classNames == null ? void 0 : classNames.modalContainer),
+    style: styles == null ? void 0 : styles.modalContainer,
+    "data-testid": "modal-container",
+    onClick: handleClickOverlay
+  }, react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    ref: refDialog,
+    className: classnames__WEBPACK_IMPORTED_MODULE_2___default()(classes.modal, classNames == null ? void 0 : classNames.modal),
+    style: _extends({
+      animation: modalAnimation + " " + animationDuration + "ms"
+    }, styles == null ? void 0 : styles.modal),
+    onMouseDown: handleModalEvent,
+    onMouseUp: handleModalEvent,
+    onClick: handleModalEvent,
+    onAnimationEnd: handleAnimationEnd,
+    id: modalId,
+    role: role,
+    "aria-modal": "true",
+    "aria-labelledby": ariaLabelledby,
+    "aria-describedby": ariaDescribedby,
+    "data-testid": "modal",
+    tabIndex: -1
+  }, focusTrapped && react__WEBPACK_IMPORTED_MODULE_0__.createElement(FocusTrap, {
+    container: refDialog,
+    initialFocusRef: initialFocusRef
+  }), children, showCloseIcon && react__WEBPACK_IMPORTED_MODULE_0__.createElement(CloseIcon, {
+    classes: classes,
+    classNames: classNames,
+    styles: styles,
+    closeIcon: closeIcon,
+    onClick: onClose,
+    id: closeIconId
+  })))), containerModal) : null;
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Modal);
+
+//# sourceMappingURL=react-responsive-modal.esm.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/react-router-dom/index.js":
 /*!************************************************!*\
   !*** ./node_modules/react-router-dom/index.js ***!
@@ -93889,6 +94780,36 @@ var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMP
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_react_datepicker_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/react-responsive-modal/styles.css":
+/*!********************************************************!*\
+  !*** ./node_modules/react-responsive-modal/styles.css ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./styles.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/react-responsive-modal/styles.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_styles_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_styles_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
