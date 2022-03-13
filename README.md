@@ -1,6 +1,13 @@
-## Installation
+## Project Features
+- Create and Edit an advertising campaign.
+- View Campaign List
+- List query cached with Redis
+- Reusable Component: Preview button to check campaign uploads
+- Dockerized 
+- Navigation to different pages
 
-With Docker:
+## Installation
+#### With Docker:
 - `copy .env.docker to .env file`
 - `docker-compose up`
 - `docker-compose exec eskimi bash`
@@ -11,7 +18,7 @@ With Docker:
 - `npm install`
 - `run on: http://localhost:8000/`
 
-Without Docker
+#### Without Docker:
 - `composer install`
 - `npm install`
 - `copy .env.example to .env file`

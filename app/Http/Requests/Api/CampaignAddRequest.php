@@ -36,6 +36,8 @@ class CampaignAddRequest extends FormRequest
             'files.*' => 'nullable|image|max:4096|mimes:jpeg,jpg,png,gif',
             'daily_budget' => 'nullable|numeric',
             'total_budget' => 'nullable|numeric',
+            'from_date' => 'nullable|date_format:Y-m-d',
+            'to_date' => 'nullable|date_format:Y-m-d',
         ];
     }
 }
