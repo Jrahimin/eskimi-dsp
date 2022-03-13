@@ -13,8 +13,6 @@ export const AxiosReq = (url, data, callback, method='post', hasFile=true) => {
         }
     }
 
-    console.log('axios option:', axiosOption);
-
     return axios(axiosOption).then((response) => {
         console.log("success response data: ", response.data)
         callback(response.data);

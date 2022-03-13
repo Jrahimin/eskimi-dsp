@@ -6,9 +6,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import {AxiosReq} from "../shared/AxiosReq";
 import {ApiEndpoints} from "../shared/ApiEndpoints";
 import { useParams } from "react-router-dom";
+import {FormAppend} from "../shared/FormAppend";
 
 function CampaignAdd() {
     const navigate = useNavigate();
+    const [files, setFiles] = useState();
     const params = useParams();
     const [formData, setFormData] = useState({
         name: '',
@@ -58,21 +60,22 @@ function CampaignAdd() {
         formData.from_date = moment(formData.from_date).format('YYYY-MM-DD');
         formData.to_date = moment(formData.to_date).format('YYYY-MM-DD');
 
+        // let dataArray = FormAppend(formData);
+        //
+        // for (let i = 0; i < files?.length; i++) {
+        //     dataArray.append("files[]", files[i]);
+        // }
+        //
+        // console.log('data array:', dataArray);
+
         AxiosReq(`../${ApiEndpoints.CAMPAIGN}/${params.id}`, formData, (data) => {
-            console.log('data: ', data);
-
-            if (data.code === undefined) {
-                setErrorMessage("Something went wrong. Please, try again later.");
-                return;
-            }
-
             if (data.code !== 200) {
                 setErrorMessage(data.message);
                 return;
             }
 
             navigate('/');
-        },'put', false);
+        },'put',false);
     }
     return (
         <div className="container">
@@ -118,6 +121,12 @@ function CampaignAdd() {
                                                 selected={new Date(formData.to_date)}
                                                 onChange={(date) => handleDate(date, 'to_date')}
                                     />
+                                </div>
+
+                                <div className="form-group  mb-2">
+                                    <label htmlFor="files">Upload Files</label>
+                                    <input type="file"  className="form-control" name="files" multiple
+                                           onChange={(e) => setFiles(e.target.files)} required/>
                                 </div>
 
                                 <button type="submit" className="btn btn-info">Update</button>

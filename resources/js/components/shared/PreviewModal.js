@@ -15,9 +15,16 @@ export const PreviewModal = ({isOpen, basePath, campaignUploads, setModelState})
             <div className="modal-body">
                 {campaignUploads.map((file, i) => {
                     return(
-                        <div className="col-md-8 mb-2">
-                            <img alt="uploads" src={basePath+file.file_path} style={{height:"100px"}}/>
+                    <div className="col-md-4">
+                        <div className="thumbnail">
+                            <a href="#" target="_blank">
+                                <img alt="uploads" src={basePath+file.file_path} style={{width:"100%"}}/>
+                                    {/*<div className="caption">*/}
+                                    {/*    <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>*/}
+                                    {/*</div>*/}
+                            </a>
                         </div>
+                    </div>
                     )
                 })}
             </div>

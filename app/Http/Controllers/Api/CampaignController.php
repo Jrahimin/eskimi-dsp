@@ -90,7 +90,7 @@ class CampaignController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, Campaign $campaign)
+    public function update(CampaignAddRequest $request, Campaign $campaign)
     {
         try{
             $response = $this->campaignService->updateCampaign($request, $campaign);

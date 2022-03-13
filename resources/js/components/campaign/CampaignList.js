@@ -15,9 +15,7 @@ function CampaignList() {
     useEffect(() => {
         AxiosReq(ApiEndpoints.CAMPAIGN, {}, (data) => {
             const listData = data.data.data;
-            console.log('list data: ',listData);
-
-            if (data.code && data.code !== 200) {
+            if (data.code !== 200) {
                 setErrorMessage(data.message);
                 return;
             }

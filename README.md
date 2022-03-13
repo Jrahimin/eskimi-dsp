@@ -8,14 +8,15 @@
 
 ## Installation
 #### With Docker:
+- `composer install`
+- `npm install`
 - `copy .env.docker to .env file`
-- `docker-compose up`
-- `docker-compose exec eskimi bash`
 - `php artisan key:generate`
 - `php artisan config:cache`
+- `docker-compose up`
+- `docker-compose exec eskimi bash`
 - `php artisan migrate`
 - `php artisan db:seed`
-- `npm install`
 - `run on: http://localhost:8000/`
 
 #### Without Docker:
