@@ -1,8 +1,7 @@
-import {React, useState} from 'react';
+import {React} from 'react';
 import Modal from "react-responsive-modal";
 
 export const PreviewModal = ({isOpen, basePath, campaignUploads, setModelState}) => {
-    console.log('uploads: ',campaignUploads)
     return(
         <Modal open={isOpen} onClose={() => setModelState(false)} center>
             <div className="modal-header text-center">
@@ -15,16 +14,11 @@ export const PreviewModal = ({isOpen, basePath, campaignUploads, setModelState})
             <div className="modal-body">
                 {campaignUploads.map((file, i) => {
                     return(
-                    <div className="col-md-4">
-                        <div className="thumbnail">
-                            <a href="#" target="_blank">
+                        <div className="col-md-4 mb-2">
+                            <div className="thumbnail">
                                 <img alt="uploads" src={basePath+file.file_path} style={{width:"100%"}}/>
-                                    {/*<div className="caption">*/}
-                                    {/*    <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>*/}
-                                    {/*</div>*/}
-                            </a>
+                            </div>
                         </div>
-                    </div>
                     )
                 })}
             </div>

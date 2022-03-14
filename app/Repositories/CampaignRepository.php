@@ -45,8 +45,6 @@ class CampaignRepository
                 'to_date' => $request->to_date,
             ]);
 
-            Cache::forget('campaigns'); //removed cache to fetch list with added campaign
-
             $response->status = 200;
             $response->data = $campaign;
             return $response;
@@ -61,41 +59,16 @@ class CampaignRepository
 
     public function updateCampaign(Request $request, Campaign $campaign)
     {
-        $response = new CommonResponseEntity();
-        try {
-            $campaign->update([
-                'name' => $request->name,
-                'daily_budget' => $request->daily_budget ?? null,
-                'total_budget' => $request->total_budget ?? null,
-                'from_date' => $request->from_date ?? null,
-                'to_date' => $request->to_date ?? null,
-            ]);
-
-            $response->status = 200;
-            $response->data = $campaign;
-            return $response;
-        } catch (\Throwable $e) {
-            Log::error(' : Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
-            $response->errorMessage = $this->exceptionMessage;
-            $response->status = $this->exceptionStatus;
-
-            return $response;
-        }
+        $campaign->update([
+            'name' => $request->name,
+            'daily_budget' => $request->daily_budget ?? null,
+            'total_budget' => $request->total_budget ?? null,
+            'from_date' => $request->from_date ?? null,
+            'to_date' => $request->to_date ?? null,
+        ]);
     }
 
     public function saveCreativeUploads($uploadData){
-        $response = new CommonResponseEntity();
-        try{
-            CreativeUpload::insert($uploadData);
-            $response->status = 200;
-            return $response;
-        } catch (\Throwable $e){
-            Log::error(' : Found Exception [Script: ' . __CLASS__ . '@' . __FUNCTION__ . '] [Origin: ' . $ex->getFile() . '-' . $ex->getLine() . ']' . $ex->getMessage());
-            $response->errorMessage = $this->exceptionMessage;
-            $response->status = $this->exceptionStatus;
-
-            return $response;
-        }
+        CreativeUpload::insert($uploadData);
     }
-
 }

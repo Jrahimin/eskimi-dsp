@@ -1,6 +1,6 @@
-import {React, useState} from 'react';
+import {React, useEffect, useState} from 'react';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {AxiosReq} from "../shared/AxiosReq";
@@ -9,6 +9,7 @@ import {FormAppend} from "../shared/FormAppend";
 
 function CampaignAdd() {
     const navigate = useNavigate();
+    const params = useParams();
     const [files, setFiles] = useState();
     const [errorMsg, setErrorMessage] = useState('');
 
@@ -19,6 +20,22 @@ function CampaignAdd() {
         daily_budget: 0,
         total_budget: 0,
     });
+
+    if(params.id){
+        useEffect(() => {
+            AxiosReq(`../${ApiEndpoints.CAMPAIGN}/${params.id}`, {}, (data) => {
+                const campaignData = data.data.data;
+
+                if (data.code && data.code !== 200) {
+                    setErrorMessage(data.message);
+                    return;
+                }
+
+                setFormData(campaignData);
+
+            }, 'get');
+        }, []);
+    }
 
     const handleFormData = (e) => {
         const {name, value} = e.target;
@@ -35,51 +52,56 @@ function CampaignAdd() {
         e.preventDefault();
         setErrorMessage('');
 
-        let dataArray = FormAppend({
-            ...formData,
-            from_date:moment(formData.from_date).format('YYYY-MM-DD'),
-            to_date:moment(formData.from_date).format('YYYY-MM-DD'),
-        });
+        formData.from_date = moment(formData.from_date).format('YYYY-MM-DD');
+        formData.to_date = moment(formData.to_date).format('YYYY-MM-DD');
 
-        for (let i = 0; i < files?.length; i++) {
-            dataArray.append("files[]", files[i]);
-        }
-
-        AxiosReq(ApiEndpoints.CAMPAIGN, dataArray, (data) => {
-            console.log('data: ', data);
-            if (data.code !== 200) {
-                setErrorMessage(data.message);
-                return;
+        if(params.id){
+            sendReq(`../${ApiEndpoints.CAMPAIGN}/${params.id}`, formData,'put',false);
+        } else{
+            let dataArray = FormAppend(formData);
+            for (let i = 0; i < files?.length; i++) {
+                dataArray.append("files[]", files[i]);
             }
 
-            navigate('/');
-        });
+            sendReq(ApiEndpoints.CAMPAIGN, dataArray);
+        }
+
+        function sendReq(url, reqData, method='post', hasFile=true){
+            AxiosReq(url, reqData, (data) => {
+                if (data.code !== 200) {
+                    setErrorMessage(data.message);
+                    return;
+                }
+
+                navigate('/');
+            },method, hasFile);
+        }
     }
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <div className="card">
-                        <div className="card-header">Add Campaign</div>
+                        <div className="card-header">{params.id ? 'Update' : 'Add'} Campaign</div>
 
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
                                 <div className="form-group mb-2">
                                     <label htmlFor="name">Campaign Name</label>
                                     <input type="text" className="form-control" name="name" placeholder="Enter Name"
-                                           onChange={handleFormData} required/>
+                                           onChange={handleFormData} value={formData.name || ''} required/>
                                 </div>
 
                                 <div className="form-group mb-2">
                                     <label htmlFor="daily_budget">Daily Budget</label>
                                     <input type="number" className="form-control" name="daily_budget" placeholder="Enter Daily Budget"
-                                           onChange={handleFormData}/>
+                                           onChange={handleFormData} value={formData.daily_budget || ''}/>
                                 </div>
 
                                 <div className="form-group mb-2">
                                     <label htmlFor="total_budget">Total Budget</label>
                                     <input type="number" className="form-control" name="total_budget" placeholder="Enter Total Budget"
-                                           onChange={handleFormData}/>
+                                           onChange={handleFormData} value={formData.total_budget || ''}/>
                                 </div>
 
                                 <div className="form-group  mb-2">
@@ -87,7 +109,7 @@ function CampaignAdd() {
                                     <DatePicker name="from_date"
                                                 className="form-control"
                                                 dateFormat="yyyy-MM-dd"
-                                                selected={formData.from_date}
+                                                selected={new Date(formData.from_date)}
                                                 onChange={(date) => handleDate(date, 'from_date')}
                                     />
                                 </div>
@@ -96,18 +118,18 @@ function CampaignAdd() {
                                     <DatePicker name="to_date"
                                                 className="form-control"
                                                 dateFormat="yyyy-MM-dd"
-                                                selected={formData.to_date}
+                                                selected={new Date(formData.to_date)}
                                                 onChange={(date) => handleDate(date, 'to_date')}
                                     />
                                 </div>
 
-                                <div className="form-group  mb-2">
+                                {!params.id && <div className="form-group  mb-2">
                                     <label htmlFor="files">Upload Files</label>
                                     <input type="file"  className="form-control" name="files" multiple
                                            onChange={(e) => setFiles(e.target.files)} required/>
-                                </div>
+                                </div>}
 
-                                <button type="submit" className="btn btn-info">Submit</button>
+                                <button type="submit" className="btn btn-info">{params.id ? 'Update' : 'Submit'}</button>
 
                                 {errorMsg && <div className="text-danger mt-2">
                                     <span>{errorMsg}</span>

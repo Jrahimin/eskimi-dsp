@@ -5134,7 +5134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar */ "./resources/js/components/Navbar.js");
 /* harmony import */ var _campaign_CampaignList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./campaign/CampaignList */ "./resources/js/components/campaign/CampaignList.js");
 /* harmony import */ var _campaign_CampaignAdd__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./campaign/CampaignAdd */ "./resources/js/components/campaign/CampaignAdd.js");
-/* harmony import */ var _campaign_CampaignEdit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./campaign/CampaignEdit */ "./resources/js/components/campaign/CampaignEdit.js");
+/* harmony import */ var _campaign_AddCampaignUploads__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./campaign/AddCampaignUploads */ "./resources/js/components/campaign/AddCampaignUploads.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -5171,8 +5171,11 @@ function App() {
             path: "/add",
             element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_campaign_CampaignAdd__WEBPACK_IMPORTED_MODULE_4__["default"], {})
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-            path: "/edit/:id",
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_campaign_CampaignEdit__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+            path: "/add/:id",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_campaign_CampaignAdd__WEBPACK_IMPORTED_MODULE_4__["default"], {})
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+            path: "/uploads/:id",
+            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_campaign_AddCampaignUploads__WEBPACK_IMPORTED_MODULE_5__.AddCampaignUploads, {})
           })]
         })]
       })
@@ -5254,6 +5257,182 @@ function Navbar() {
 
 /***/ }),
 
+/***/ "./resources/js/components/campaign/AddCampaignUploads.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/campaign/AddCampaignUploads.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AddCampaignUploads": () => (/* binding */ AddCampaignUploads)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/ApiEndpoints */ "./resources/js/components/shared/ApiEndpoints.js");
+/* harmony import */ var _shared_FormAppend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/FormAppend */ "./resources/js/components/shared/FormAppend.js");
+/* harmony import */ var _shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/AxiosReq */ "./resources/js/components/shared/AxiosReq.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+var AddCampaignUploads = function AddCampaignUploads() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    uploads: []
+  }),
+      _useState2 = _slicedToArray(_useState, 2),
+      campaign = _useState2[0],
+      setCampaign = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      basePath = _useState4[0],
+      setBasePath = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+      _useState6 = _slicedToArray(_useState5, 2),
+      errorMsg = _useState6[0],
+      setErrorMessage = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+      _useState8 = _slicedToArray(_useState7, 2),
+      files = _useState8[0],
+      setFiles = _useState8[1];
+
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useParams)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__.ApiEndpoints.CAMPAIGN, "/").concat(params.id), {}, function (data) {
+      var campaignData = data.data.data;
+
+      if (data.code && data.code !== 200) {
+        setErrorMessage(data.message);
+        return;
+      }
+
+      setCampaign(campaignData);
+      setBasePath(data.data.path);
+    }, 'get');
+  }, []);
+
+  var _onSubmit = function onSubmit(e, id) {
+    e.preventDefault();
+    setErrorMessage('');
+    var name = e.target.name;
+
+    if (name === 'fileDel') {
+      sendReq("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__.ApiEndpoints.CAMPAIGN, "/").concat(id), {}, 'delete', false);
+    } else {
+      var dataArray = new FormData();
+      dataArray.append('id', params.id);
+
+      for (var i = 0; i < (files === null || files === void 0 ? void 0 : files.length); i++) {
+        dataArray.append("files[]", files[i]);
+      }
+
+      sendReq('../' + _shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_1__.ApiEndpoints.CAMPAIGN_UPLOAD, dataArray);
+    }
+
+    function sendReq(url, reqData) {
+      var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'post';
+      var hasFile = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)(url, reqData, function (data) {
+        if (data.code !== 200) {
+          setErrorMessage(data.message);
+          return;
+        }
+
+        navigate('/');
+      }, method, hasFile);
+    }
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "col-md-8 offset-2",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+      children: "Creative Uploads"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), campaign.uploads.map(function (file, i) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "col-md-4 mb-2",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "thumbnail mb-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("img", {
+            alt: "uploads",
+            src: basePath + file.file_path,
+            style: {
+              width: "100%"
+            }
+          }, i)
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("form", {
+          onSubmit: function onSubmit(e) {
+            return _onSubmit(e, file.id);
+          },
+          name: "fileDel",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+            type: "submit",
+            className: "btn btn-danger",
+            children: "delete"
+          })
+        })]
+      });
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+      children: "Upload Files"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("form", {
+      onSubmit: _onSubmit,
+      name: "fileUp",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "form-group  mb-2",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
+          type: "file",
+          className: "form-control",
+          name: "files",
+          multiple: true,
+          onChange: function onChange(e) {
+            return setFiles(e.target.files);
+          },
+          required: true
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+        className: "mb-5",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
+          type: "submit",
+          className: "btn btn-info mr-2",
+          children: "Upload"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+          className: "btn btn-primary",
+          to: "/",
+          children: "Back"
+        }), errorMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          className: "text-danger mt-2",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
+            children: errorMsg
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("br", {})]
+    })]
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/components/campaign/CampaignAdd.js":
 /*!*********************************************************!*\
   !*** ./resources/js/components/campaign/CampaignAdd.js ***!
@@ -5307,6 +5486,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function CampaignAdd() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
+  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)();
 
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
       _useState2 = _slicedToArray(_useState, 2),
@@ -5329,6 +5509,21 @@ function CampaignAdd() {
       formData = _useState6[0],
       setFormData = _useState6[1];
 
+  if (params.id) {
+    (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+      (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, "/").concat(params.id), {}, function (data) {
+        var campaignData = data.data.data;
+
+        if (data.code && data.code !== 200) {
+          setErrorMessage(data.message);
+          return;
+        }
+
+        setFormData(campaignData);
+      }, 'get');
+    }, []);
+  }
+
   var handleFormData = function handleFormData(e) {
     var _e$target = e.target,
         name = _e$target.name,
@@ -5338,255 +5533,6 @@ function CampaignAdd() {
   };
 
   var handleDate = function handleDate(date, name) {
-    formData[name] = date;
-    setFormData(_objectSpread({}, formData));
-  };
-
-  var onSubmit = function onSubmit(e) {
-    e.preventDefault();
-    setErrorMessage('');
-    var dataArray = (0,_shared_FormAppend__WEBPACK_IMPORTED_MODULE_5__.FormAppend)(_objectSpread(_objectSpread({}, formData), {}, {
-      from_date: moment__WEBPACK_IMPORTED_MODULE_1___default()(formData.from_date).format('YYYY-MM-DD'),
-      to_date: moment__WEBPACK_IMPORTED_MODULE_1___default()(formData.from_date).format('YYYY-MM-DD')
-    }));
-
-    for (var i = 0; i < (files === null || files === void 0 ? void 0 : files.length); i++) {
-      dataArray.append("files[]", files[i]);
-    }
-
-    (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, dataArray, function (data) {
-      console.log('data: ', data);
-
-      if (data.code !== 200) {
-        setErrorMessage(data.message);
-        return;
-      }
-
-      navigate('/');
-    });
-  };
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-    className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-      className: "row justify-content-center",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-        className: "col-md-8",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-          className: "card",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "card-header",
-            children: "Add Campaign"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-            className: "card-body",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
-              onSubmit: onSubmit,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "name",
-                  children: "Campaign Name"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                  type: "text",
-                  className: "form-control",
-                  name: "name",
-                  placeholder: "Enter Name",
-                  onChange: handleFormData,
-                  required: true
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "daily_budget",
-                  children: "Daily Budget"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                  type: "number",
-                  className: "form-control",
-                  name: "daily_budget",
-                  placeholder: "Enter Daily Budget",
-                  onChange: handleFormData
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "total_budget",
-                  children: "Total Budget"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                  type: "number",
-                  className: "form-control",
-                  name: "total_budget",
-                  placeholder: "Enter Total Budget",
-                  onChange: handleFormData
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group  mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "from_date",
-                  children: "From"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_8___default()), {
-                  name: "from_date",
-                  className: "form-control",
-                  dateFormat: "yyyy-MM-dd",
-                  selected: formData.from_date,
-                  onChange: function onChange(date) {
-                    return handleDate(date, 'from_date');
-                  }
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group  mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "to_date",
-                  children: "To"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((react_datepicker__WEBPACK_IMPORTED_MODULE_8___default()), {
-                  name: "to_date",
-                  className: "form-control",
-                  dateFormat: "yyyy-MM-dd",
-                  selected: formData.to_date,
-                  onChange: function onChange(date) {
-                    return handleDate(date, 'to_date');
-                  }
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
-                className: "form-group  mb-2",
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
-                  htmlFor: "files",
-                  children: "Upload Files"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
-                  type: "file",
-                  className: "form-control",
-                  name: "files",
-                  multiple: true,
-                  onChange: function onChange(e) {
-                    return setFiles(e.target.files);
-                  },
-                  required: true
-                })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
-                type: "submit",
-                className: "btn btn-info",
-                children: "Submit"
-              }), errorMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
-                className: "text-danger mt-2",
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
-                  children: errorMsg
-                })
-              })]
-            })
-          })]
-        })
-      })
-    })
-  });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CampaignAdd);
-
-/***/ }),
-
-/***/ "./resources/js/components/campaign/CampaignEdit.js":
-/*!**********************************************************!*\
-  !*** ./resources/js/components/campaign/CampaignEdit.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-datepicker */ "./node_modules/react-datepicker/dist/react-datepicker.min.js");
-/* harmony import */ var react_datepicker__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_datepicker__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-datepicker/dist/react-datepicker.css */ "./node_modules/react-datepicker/dist/react-datepicker.css");
-/* harmony import */ var _shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/AxiosReq */ "./resources/js/components/shared/AxiosReq.js");
-/* harmony import */ var _shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/ApiEndpoints */ "./resources/js/components/shared/ApiEndpoints.js");
-/* harmony import */ var _shared_FormAppend__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/FormAppend */ "./resources/js/components/shared/FormAppend.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-function CampaignAdd() {
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
-
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
-      _useState2 = _slicedToArray(_useState, 2),
-      files = _useState2[0],
-      setFiles = _useState2[1];
-
-  var params = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)();
-
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    name: '',
-    from_date: new Date(),
-    to_date: new Date(),
-    daily_budget: 0,
-    total_budget: 0
-  }),
-      _useState4 = _slicedToArray(_useState3, 2),
-      formData = _useState4[0],
-      setFormData = _useState4[1];
-
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-      _useState6 = _slicedToArray(_useState5, 2),
-      errorMsg = _useState6[0],
-      setErrorMessage = _useState6[1]; //const [formData, setFormData] = useState(campaign);
-
-
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, "/").concat(params.id), {}, function (data) {
-      var campaignData = data.data.data;
-      console.log('data: ', campaignData);
-
-      if (data.code && data.code !== 200) {
-        setErrorMessage(data.message);
-        return;
-      }
-
-      setFormData(campaignData);
-    }, 'get');
-  }, []);
-
-  var handleFormData = function handleFormData(e) {
-    var _e$target = e.target,
-        name = _e$target.name,
-        value = _e$target.value;
-    console.log(name, value);
-    formData[name] = value;
-    setFormData(_objectSpread({}, formData));
-  };
-
-  var handleDate = function handleDate(date, name) {
-    console.log('in date', date, name);
     formData[name] = date;
     setFormData(_objectSpread({}, formData));
   };
@@ -5595,22 +5541,32 @@ function CampaignAdd() {
     e.preventDefault();
     setErrorMessage('');
     formData.from_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(formData.from_date).format('YYYY-MM-DD');
-    formData.to_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(formData.to_date).format('YYYY-MM-DD'); // let dataArray = FormAppend(formData);
-    //
-    // for (let i = 0; i < files?.length; i++) {
-    //     dataArray.append("files[]", files[i]);
-    // }
-    //
-    // console.log('data array:', dataArray);
+    formData.to_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(formData.to_date).format('YYYY-MM-DD');
 
-    (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, "/").concat(params.id), formData, function (data) {
-      if (data.code !== 200) {
-        setErrorMessage(data.message);
-        return;
+    if (params.id) {
+      sendReq("../".concat(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, "/").concat(params.id), formData, 'put', false);
+    } else {
+      var dataArray = (0,_shared_FormAppend__WEBPACK_IMPORTED_MODULE_5__.FormAppend)(formData);
+
+      for (var i = 0; i < (files === null || files === void 0 ? void 0 : files.length); i++) {
+        dataArray.append("files[]", files[i]);
       }
 
-      navigate('/');
-    }, 'put', false);
+      sendReq(_shared_ApiEndpoints__WEBPACK_IMPORTED_MODULE_4__.ApiEndpoints.CAMPAIGN, dataArray);
+    }
+
+    function sendReq(url, reqData) {
+      var method = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'post';
+      var hasFile = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+      (0,_shared_AxiosReq__WEBPACK_IMPORTED_MODULE_3__.AxiosReq)(url, reqData, function (data) {
+        if (data.code !== 200) {
+          setErrorMessage(data.message);
+          return;
+        }
+
+        navigate('/');
+      }, method, hasFile);
+    }
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
@@ -5621,9 +5577,9 @@ function CampaignAdd() {
         className: "col-md-8",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
           className: "card",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
             className: "card-header",
-            children: "Add Campaign"
+            children: [params.id ? 'Update' : 'Add', " Campaign"]
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
             className: "card-body",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("form", {
@@ -5696,7 +5652,7 @@ function CampaignAdd() {
                     return handleDate(date, 'to_date');
                   }
                 })]
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+              }), !params.id && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
                 className: "form-group  mb-2",
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
                   htmlFor: "files",
@@ -5714,7 +5670,7 @@ function CampaignAdd() {
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("button", {
                 type: "submit",
                 className: "btn btn-info",
-                children: "Update"
+                children: params.id ? 'Update' : 'Submit'
               }), errorMsg && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
                 className: "text-danger mt-2",
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
@@ -5857,6 +5813,9 @@ function CampaignList() {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
                     scope: "col",
                     children: "Preview"
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("th", {
+                    scope: "col",
+                    children: "Manage Uploads"
                   })]
                 })
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("tbody", {
@@ -5878,7 +5837,7 @@ function CampaignList() {
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
                       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
                         className: "btn btn-sm btn-primary",
-                        to: "edit/".concat(campaign.id),
+                        to: "add/".concat(campaign.id),
                         children: "Edit"
                       })
                     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
@@ -5889,6 +5848,12 @@ function CampaignList() {
                           return onPreview(campaign.uploads)(e);
                         },
                         children: "Preview"
+                      })
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("td", {
+                      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                        className: "btn btn-sm btn-info",
+                        to: "uploads/".concat(campaign.id),
+                        children: "Manage"
                       })
                     })]
                   }, i);
@@ -5924,7 +5889,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var baseUrl = "api/";
 var ApiEndpoints = {
-  CAMPAIGN: baseUrl + 'campaigns'
+  CAMPAIGN: baseUrl + 'campaigns',
+  CAMPAIGN_UPLOAD: baseUrl + 'campaigns/upload'
 };
 
 /***/ }),
@@ -5959,10 +5925,8 @@ var AxiosReq = function AxiosReq(url, data, callback) {
   }
 
   return axios__WEBPACK_IMPORTED_MODULE_0___default()(axiosOption).then(function (response) {
-    console.log("success response data: ", response.data);
     callback(response.data);
   })["catch"](function (error) {
-    console.log('axios error response:', error);
     var data = {
       code: 500,
       message: "Something went wrong."
@@ -5994,7 +5958,6 @@ var FormAppend = function FormAppend() {
     Object.keys(data).forEach(function (key) {
       dataArray.append(key, data[key]);
     });
-    console.log('append dd', dataArray);
     return dataArray;
   }
 
@@ -6026,7 +5989,6 @@ var PreviewModal = function PreviewModal(_ref) {
       basePath = _ref.basePath,
       campaignUploads = _ref.campaignUploads,
       setModelState = _ref.setModelState;
-  console.log('uploads: ', campaignUploads);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_responsive_modal__WEBPACK_IMPORTED_MODULE_1__["default"], {
     open: isOpen,
     onClose: function onClose() {
@@ -6042,19 +6004,15 @@ var PreviewModal = function PreviewModal(_ref) {
       className: "modal-body",
       children: campaignUploads.map(function (file, i) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "col-md-4",
+          className: "col-md-4 mb-2",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
             className: "thumbnail",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
-              href: "#",
-              target: "_blank",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-                alt: "uploads",
-                src: basePath + file.file_path,
-                style: {
-                  width: "100%"
-                }
-              })
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+              alt: "uploads",
+              src: basePath + file.file_path,
+              style: {
+                width: "100%"
+              }
             })
           })
         });

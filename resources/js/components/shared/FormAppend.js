@@ -5,8 +5,6 @@ export const FormAppend = (data = {}) => {
             dataArray.append(key, data[key]);
         })
 
-        console.log('append dd', dataArray)
-
         return dataArray;
     }
 

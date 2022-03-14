@@ -1,16 +1,17 @@
 ## Project Features
-- Create and Edit an advertising campaign.
 - View Campaign List
+- Create and Edit an advertising campaign.
+- Manage Creative Uploads (Add More || Delete)
+- Navigation to different pages
 - List query cached with Redis
 - Reusable Component: Preview button to check campaign uploads
 - Dockerized 
-- Navigation to different pages
 
 ## Installation
 #### With Docker:
 - `composer install`
 - `npm install`
-- `copy .env.docker to .env file`
+- `rename .env.docker to .env file`
 - `php artisan key:generate`
 - `php artisan config:cache`
 - `docker-compose up`
@@ -22,8 +23,10 @@
 #### Without Docker:
 - `composer install`
 - `npm install`
-- `copy .env.example to .env file`
+- `rename .env.example to .env file`
+- `put your own db credentials`
 - `php artisan key:generate`
+- `php artisan config:cache`
 - `php artisan migrate`
 - `php artisan db:seed`
 - `php artisan serve`

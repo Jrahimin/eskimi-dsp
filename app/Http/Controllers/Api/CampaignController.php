@@ -109,10 +109,31 @@ class CampaignController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy($id)
     {
-        //
+        try{
+            $response = $this->campaignService->deleteUpload($id);
+
+            return $this->handleResponse($response, "Campaign file has been deleted successfully");
+        } catch (\Exception $e){
+            Log::error('Found Exception: ' . $e->getMessage() . ' [Script: ' . __CLASS__.'@'.__FUNCTION__ . '] [Origin: ' . $e->getFile() . '-' . $e->getLine() . ']');
+
+            return $this->invalidResponse($this->exceptionMessage,500);
+        }
+    }
+
+    public function storeUploads(Request $request)
+    {
+        try{
+            $response = $this->campaignService->addCampaignUploads($request);
+
+            return $this->handleResponse($response, "Campaign files been added successfully");
+        } catch (\Exception $e){
+            Log::error('Found Exception: ' . $e->getMessage() . ' [Script: ' . __CLASS__.'@'.__FUNCTION__ . '] [Origin: ' . $e->getFile() . '-' . $e->getLine() . ']');
+
+            return $this->invalidResponse($this->exceptionMessage,500);
+        }
     }
 }

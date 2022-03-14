@@ -8,7 +8,7 @@ import {
 import Navbar from './Navbar';
 import CampaignList from "./campaign/CampaignList";
 import CampaignAdd from "./campaign/CampaignAdd";
-import CampaignEdit from "./campaign/CampaignEdit";
+import {AddCampaignUploads} from "./campaign/AddCampaignUploads";
 
 function App() {
     return (
@@ -30,7 +30,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<CampaignList />} />
                     <Route path="/add" element={<CampaignAdd />} />
-                    <Route path="/edit/:id" element={<CampaignEdit />} />
+                    <Route path="/add/:id" element={<CampaignAdd />} />
+                    <Route path="/uploads/:id" element={<AddCampaignUploads />} />
                 </Routes>
             </BrowserRouter>
         </>

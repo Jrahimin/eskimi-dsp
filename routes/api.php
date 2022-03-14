@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('campaigns', CampaignController::class);
+Route::post('campaigns/upload', [CampaignController::class, 'storeUploads']);

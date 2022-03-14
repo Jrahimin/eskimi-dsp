@@ -48,6 +48,7 @@ function CampaignList() {
                                     <th scope="col">To</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Preview</th>
+                                    <th scope="col">Manage Uploads</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -60,11 +61,11 @@ function CampaignList() {
                                             <td>{ campaign.total_budget }</td>
                                             <td>{ campaign.from_date }</td>
                                             <td>{ campaign.to_date }</td>
-                                            <td><Link className="btn btn-sm btn-primary" to={`edit/${campaign.id}`}>Edit</Link></td>
+                                            <td><Link className="btn btn-sm btn-primary" to={`add/${campaign.id}`}>Edit</Link></td>
                                             <td>
-                                                {/*<a className="btn btn-sm btn-primary" href="#" onClick={onPreview(campaign.uploads)}>Preview</a>*/}
                                                 <a className="btn btn-sm btn-primary" href="#" onClick={(e) => onPreview(campaign.uploads)(e)}>Preview</a>
                                             </td>
+                                            <td><Link className="btn btn-sm btn-info" to={`uploads/${campaign.id}`}>Manage</Link></td>
                                         </tr>
                                     )
                                 })}

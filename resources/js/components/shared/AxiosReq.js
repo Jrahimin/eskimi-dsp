@@ -14,11 +14,8 @@ export const AxiosReq = (url, data, callback, method='post', hasFile=true) => {
     }
 
     return axios(axiosOption).then((response) => {
-        console.log("success response data: ", response.data)
         callback(response.data);
     }).catch((error) => {
-        console.log('axios error response:', error);
-
         const data = {
             code: 500,
             message: "Something went wrong.",
